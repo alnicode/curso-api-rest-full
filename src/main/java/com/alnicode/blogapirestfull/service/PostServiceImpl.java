@@ -47,10 +47,21 @@ public class PostServiceImpl implements PostService {
                 post.getContent());
     }
 
-    @Override
-    public PostDTO getPost(long idPost) {
-        var post = this.postRepository.findById(idPost)
+    private Post getPost(long idPost) {
+        return this.postRepository.findById(idPost)
                 .orElseThrow(() -> new ResourceNotFoundException("Publicación", "id", idPost));
-        return this.toPostDTO(post);
+    }
+
+    @Override
+    public PostDTO getPostById(long idPost) {
+        return this.toPostDTO(this.getPost(idPost));
+    }
+
+    @Override
+    public PostDTO updatePost(PostDTO postDTO, long idPost) {
+        var post = this.getPost(idPost);
+        var updatedPost = this.postRepository.save(post);
+        
+        return this.toPostDTO(updatedPost);
     }
 }
