@@ -68,4 +68,10 @@ public class PostServiceImpl implements PostService {
         
         return this.toPostDTO(updatedPost);
     }
+
+    @Override
+    public void deletePost(long idPost) {
+        var postFounded = this.getPost(idPost);
+        this.postRepository.delete(postFounded);
+    }
 }
