@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.alnicode.blogapirestfull.dto.PostDTO;
 import com.alnicode.blogapirestfull.entity.Post;
+import com.alnicode.blogapirestfull.exception.ResourceNotFoundException;
 import com.alnicode.blogapirestfull.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,26 +25,32 @@ public class PostServiceImpl implements PostService {
     public List<PostDTO> getAllPosts() {
         List<Post> posts = this.postRepository.findAll();
         return posts.stream().map(post -> this.toPostDTO(post))
-                    .collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
-    
-    //DTO to Entity
+
+    // DTO to Entity
     private Post toPost(PostDTO postDTO) {
         var post = new Post();
         post.setTitle(postDTO.getTitle());
         post.setDescription(postDTO.getDescription());
         post.setContent(postDTO.getContent());
-        
+
         return this.postRepository.save(post);
     }
 
-    //Entity to DTO
+    // Entity to DTO
     private PostDTO toPostDTO(Post post) {
         return new PostDTO(
-            post.getIdPost(),
-            post.getTitle(),
-            post.getDescription(),
-            post.getContent()
-        );
+                post.getIdPost(),
+                post.getTitle(),
+                post.getDescription(),
+                post.getContent());
+    }
+
+    @Override
+    public PostDTO getPost(long idPost) {
+        var post = this.postRepository.findById(idPost)
+                .orElseThrow(() -> new ResourceNotFoundException("Publicación", "id", idPost));
+        return this.toPostDTO(post);
     }
 }
