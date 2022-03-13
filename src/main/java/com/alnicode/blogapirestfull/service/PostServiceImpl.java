@@ -1,6 +1,7 @@
 package com.alnicode.blogapirestfull.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.alnicode.blogapirestfull.dto.PostDTO;
 import com.alnicode.blogapirestfull.entity.Post;
@@ -21,7 +22,9 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> getAllPosts() {
-        return null;
+        List<Post> posts = this.postRepository.findAll();
+        return posts.stream().map(post -> this.toPostDTO(post))
+                    .collect(Collectors.toList());
     }
     
     //DTO to Entity
