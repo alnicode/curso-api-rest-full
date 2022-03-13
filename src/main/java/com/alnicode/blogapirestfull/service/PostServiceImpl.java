@@ -71,7 +71,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public void deletePost(long idPost) {
-        var postFounded = this.getPost(idPost);
-        this.postRepository.delete(postFounded);
+        var postFound = this.getPost(idPost);
+        this.postRepository.delete(postFound);
     }
 }
