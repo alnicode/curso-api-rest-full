@@ -1,5 +1,7 @@
 package com.alnicode.blogapirestfull.service;
 
+import java.util.List;
+
 import com.alnicode.blogapirestfull.dto.PostDTO;
 import com.alnicode.blogapirestfull.entity.Post;
 import com.alnicode.blogapirestfull.repository.PostRepository;
@@ -29,5 +31,11 @@ public class PostServiceImpl implements PostService {
             newPost.getContent()
         );
     }
+
+    @Override
+    public List<PostDTO> getAllPosts() {
+        return null;
+    }
+    
     
 }
