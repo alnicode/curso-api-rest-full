@@ -60,6 +60,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO updatePost(PostDTO postDTO, long idPost) {
         var post = this.getPost(idPost);
+        post.setTitle(postDTO.getTitle());
+        post.setDescription(postDTO.getDescription());
+        post.setContent(postDTO.getContent());
+
         var updatedPost = this.postRepository.save(post);
         
         return this.toPostDTO(updatedPost);

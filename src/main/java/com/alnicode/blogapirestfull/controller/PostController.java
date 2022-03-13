@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +36,11 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPost(@PathVariable(name = "id") long idPost) {
         return ResponseEntity.ok(this.postService.getPostById(idPost));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PostDTO> updatePost(@RequestBody PostDTO postDTO, @PathVariable(name = "id") long idPost) {
+        var post = this.postService.updatePost(postDTO, idPost);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 }
