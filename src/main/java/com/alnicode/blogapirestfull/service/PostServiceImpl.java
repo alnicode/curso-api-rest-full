@@ -9,6 +9,9 @@ import com.alnicode.blogapirestfull.exception.ResourceNotFoundException;
 import com.alnicode.blogapirestfull.repository.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,9 +25,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> posts = this.postRepository.findAll();
-        return posts.stream().map(post -> this.toPostDTO(post))
+    public List<PostDTO> getAllPosts(int pageNumber, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Page<Post> posts = this.postRepository.findAll(pageable);
+
+        List<Post> postList = posts.getContent();
+        return postList.stream().map(post -> this.toPostDTO(post))
                 .collect(Collectors.toList());
     }
 

@@ -15,17 +15,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/posts")
-public class PostController {    
+public class PostController {
     @Autowired
     private PostService postService;
 
     @GetMapping()
-    public List<PostDTO> getAllPosts() {
-        return this.postService.getAllPosts();
+    public List<PostDTO> getAllPosts(
+            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return this.postService.getAllPosts(pageNumber, pageSize);
     }
 
     @GetMapping("/{id}")
