@@ -37,5 +37,24 @@ public class PostServiceImpl implements PostService {
         return null;
     }
     
-    
+    //DTO to Entity
+    private Post toPost(PostDTO postDTO) {
+        var post = new Post();
+        post.setTitle(postDTO.getTitle());
+        post.setDescription(postDTO.getDescription());
+        post.setContent(postDTO.getContent());
+        
+        return this.postRepository.save(post);
+    }
+
+    //Entity to DTO
+    private PostDTO toPostDTO(PostDTO postDTO) {
+        var post = this.toPost(postDTO);
+        return new PostDTO(
+            post.getIdPost(),
+            post.getTitle(),
+            post.getDescription(),
+            post.getContent()
+        );
+    }
 }
