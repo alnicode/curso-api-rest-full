@@ -16,20 +16,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO createPost(PostDTO postDTO) {
-        //DTO to Entity
-        Post post = new Post();
-        post.setTitle(postDTO.getTitle());
-        post.setDescription(postDTO.getDescription());
-        post.setContent(postDTO.getContent());
-
-        Post newPost = this.postRepository.save(post);
-
-        return new PostDTO(
-            newPost.getIdPost(),
-            newPost.getTitle(),
-            newPost.getDescription(),
-            newPost.getContent()
-        );
+        return this.toPostDTO(this.toPost(postDTO));
     }
 
     @Override
@@ -48,8 +35,7 @@ public class PostServiceImpl implements PostService {
     }
 
     //Entity to DTO
-    private PostDTO toPostDTO(PostDTO postDTO) {
-        var post = this.toPost(postDTO);
+    private PostDTO toPostDTO(Post post) {
         return new PostDTO(
             post.getIdPost(),
             post.getTitle(),
