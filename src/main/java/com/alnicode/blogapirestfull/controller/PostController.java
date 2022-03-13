@@ -19,15 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/posts")
-public class PostController {
-    
+public class PostController {    
     @Autowired
     private PostService postService;
-
-    @PostMapping()
-    public ResponseEntity<PostDTO> savePost(@RequestBody PostDTO postDTO) {
-        return new ResponseEntity<>(this.postService.createPost(postDTO), HttpStatus.CREATED);
-    }
 
     @GetMapping()
     public List<PostDTO> getAllPosts() {
@@ -37,6 +31,11 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDTO> getPost(@PathVariable(name = "id") long idPost) {
         return ResponseEntity.ok(this.postService.getPostById(idPost));
+    }
+
+    @PostMapping()
+    public ResponseEntity<PostDTO> savePost(@RequestBody PostDTO postDTO) {
+        return new ResponseEntity<>(this.postService.createPost(postDTO), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
