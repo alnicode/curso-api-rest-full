@@ -62,7 +62,8 @@ public class PostServiceImpl implements PostService {
                 post.getContent());
     }
 
-    private Post getPost(long idPost) {
+    @Override
+    public Post getPost(long idPost) {
         return this.postRepository.findById(idPost)
                 .orElseThrow(() -> new ResourceNotFoundException("Publicación", "id", idPost));
     }

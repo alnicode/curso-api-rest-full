@@ -16,6 +16,9 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private PostService postService;
+
     private CommentDTO toDTO(Comment comment) {
         return new CommentDTO(comment.getIdComment(), comment.getBody(), comment.getName(), comment.getEmail());
     }
@@ -32,7 +35,12 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO createComment(long idPost, CommentDTO commentDTO) {
-        return null;
+        var comment = this.toEntity(commentDTO);
+        var post = this.postService.getPost(idPost);
+        comment.setPost(post);
+        var newComment = this.commentRepository.save(comment);
+
+        return this.toDTO(newComment);
     }
 
 }
