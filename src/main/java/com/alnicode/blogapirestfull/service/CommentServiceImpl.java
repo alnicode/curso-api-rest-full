@@ -1,5 +1,8 @@
 package com.alnicode.blogapirestfull.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.alnicode.blogapirestfull.dto.CommentDTO;
 import com.alnicode.blogapirestfull.entity.Comment;
 import com.alnicode.blogapirestfull.repository.CommentRepository;
@@ -41,6 +44,12 @@ public class CommentServiceImpl implements CommentService {
         var newComment = this.commentRepository.save(comment);
 
         return this.toDTO(newComment);
+    }
+
+    @Override
+    public List<CommentDTO> getByIdPost(long idPost) {
+        List<Comment> comments = this.commentRepository.findByPostIdPost(idPost);
+        return comments.stream().map(comment -> this.toDTO(comment)).collect(Collectors.toList());
     }
 
 }
