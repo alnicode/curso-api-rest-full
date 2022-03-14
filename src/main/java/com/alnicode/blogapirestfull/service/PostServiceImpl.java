@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.alnicode.blogapirestfull.dto.PostDTO;
+import com.alnicode.blogapirestfull.dto.PostResponseDTO;
 import com.alnicode.blogapirestfull.entity.Post;
 import com.alnicode.blogapirestfull.exception.ResourceNotFoundException;
 import com.alnicode.blogapirestfull.repository.PostRepository;
@@ -25,14 +26,17 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPosts(int pageNumber, int pageSize) {
+    public PostResponseDTO getAllPosts(int pageNumber, int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         Page<Post> posts = this.postRepository.findAll(pageable);
 
         List<Post> postList = posts.getContent();
-        return postList.stream().map(post -> this.toPostDTO(post))
+        List<PostDTO> content = postList.stream().map(post -> this.toPostDTO(post))
                 .collect(Collectors.toList());
+
+        return new PostResponseDTO(content, posts.getNumber(), posts.getSize(), posts.getTotalElements(),
+                posts.getTotalPages(), posts.isLast());
     }
 
     // DTO to Entity
@@ -72,7 +76,7 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDTO.getContent());
 
         var updatedPost = this.postRepository.save(post);
-        
+
         return this.toPostDTO(updatedPost);
     }
 

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PostResponseDTO {
-    private List<PostDTO> contents;
+    private List<PostDTO> content;
     private int pageNumber;
     private int pageSize;
     private long totalItems;

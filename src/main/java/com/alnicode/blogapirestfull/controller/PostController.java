@@ -1,8 +1,7 @@
 package com.alnicode.blogapirestfull.controller;
 
-import java.util.List;
-
 import com.alnicode.blogapirestfull.dto.PostDTO;
+import com.alnicode.blogapirestfull.dto.PostResponseDTO;
 import com.alnicode.blogapirestfull.service.PostService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class PostController {
     private PostService postService;
 
     @GetMapping()
-    public List<PostDTO> getAllPosts(
+    public PostResponseDTO getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
             @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
         return this.postService.getAllPosts(pageNumber, pageSize);
