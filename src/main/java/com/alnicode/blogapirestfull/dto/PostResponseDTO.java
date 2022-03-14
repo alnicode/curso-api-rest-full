@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class PostResponse {
+public class PostResponseDTO {
     private List<PostDTO> contents;
     private int pageNumber;
     private int pageSize;
