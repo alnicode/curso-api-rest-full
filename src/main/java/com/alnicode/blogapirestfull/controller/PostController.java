@@ -26,8 +26,9 @@ public class PostController {
     @GetMapping()
     public PostResponseDTO getAllPosts(
             @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
-        return this.postService.getAllPosts(pageNumber, pageSize);
+            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = "idPost", required = false) String sortBy) {
+        return this.postService.getAllPosts(pageNumber, pageSize, sortBy);
     }
 
     @GetMapping("/{id}")

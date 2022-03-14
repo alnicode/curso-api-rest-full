@@ -26,7 +26,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostResponseDTO getAllPosts(int pageNumber, int pageSize) {
+    public PostResponseDTO getAllPosts(int pageNumber, int pageSize, String sortBy) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         Page<Post> posts = this.postRepository.findAll(pageable);
