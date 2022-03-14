@@ -3,6 +3,7 @@ package com.alnicode.blogapirestfull.controller;
 import com.alnicode.blogapirestfull.dto.PostDTO;
 import com.alnicode.blogapirestfull.dto.PostResponseDTO;
 import com.alnicode.blogapirestfull.service.PostService;
+import com.alnicode.blogapirestfull.util.AppConstants;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,16 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/posts")
-public class PostController {
+public class PostController implements AppConstants {
     @Autowired
     private PostService postService;
 
     @GetMapping()
     public PostResponseDTO getAllPosts(
-            @RequestParam(value = "pageNumber", defaultValue = "0", required = false) int pageNumber,
-            @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-            @RequestParam(value = "sortBy", defaultValue = "idPost", required = false) String sortBy,
-            @RequestParam(value = "sortDir", defaultValue = "asc", required = false) String sortDir) {
+            @RequestParam(value = "pageNumber", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNumber,
+            @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = DEFAULT_SORT_BY, required = false) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIR, required = false) String sortDir) {
         return this.postService.getAllPosts(pageNumber, pageSize, sortBy, sortDir);
     }
 
