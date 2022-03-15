@@ -58,7 +58,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDTO getById(long idPost, long idComment) {
         var post = this.postService.getPost(idPost);
-        var comment = this.commentRepository.findById(idPost)
+        var comment = this.commentRepository.findById(idComment)
                 .orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", idComment));
         
         if (!comment.getPost().getIdPost().equals(post.getIdPost())) {
