@@ -84,4 +84,10 @@ public class CommentServiceImpl implements CommentService {
         return this.toDTO(updatedComment);
     }
 
+    @Override
+    public void deleteComment(long idPost, long idComment) {
+        var comment = this.getCommentById(idPost, idComment);
+        this.commentRepository.delete(comment);
+    }
+
 }
