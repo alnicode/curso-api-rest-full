@@ -73,4 +73,15 @@ public class CommentServiceImpl implements CommentService {
         return this.toDTO(comment);
     }
 
+    @Override
+    public CommentDTO updateComment(long idPost, long idComment, CommentDTO commentRequest) {
+        var comment = this.getCommentById(idPost, idComment);
+        comment.setName(commentRequest.getName());
+        comment.setEmail(commentRequest.getEmail());
+        comment.setBody(commentRequest.getBody());
+
+        var updatedComment = this.commentRepository.save(comment);
+        return this.toDTO(updatedComment);
+    }
+
 }
