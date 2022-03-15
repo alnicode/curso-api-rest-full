@@ -39,6 +39,18 @@ public class CommentServiceImpl implements CommentService {
         return comment;
     }
 
+    private Comment getCommentById(long idPost, long idComment) {
+        var post = this.postService.getPost(idPost);
+        var comment = this.commentRepository.findById(idComment)
+                .orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", idComment));
+        
+        if (!comment.getPost().getIdPost().equals(post.getIdPost())) {
+            throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece a la publicación");
+        }
+
+        return comment;
+    }
+
     @Override
     public CommentDTO createComment(long idPost, CommentDTO commentDTO) {
         var comment = this.toEntity(commentDTO);
@@ -57,14 +69,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDTO getById(long idPost, long idComment) {
-        var post = this.postService.getPost(idPost);
-        var comment = this.commentRepository.findById(idComment)
-                .orElseThrow(() -> new ResourceNotFoundException("Comentario", "id", idComment));
-        
-        if (!comment.getPost().getIdPost().equals(post.getIdPost())) {
-            throw new BlogAppException(HttpStatus.BAD_REQUEST, "El comentario no pertenece la publicación");
-        }
-        
+        var comment = this.getCommentById(idPost, idComment);
         return this.toDTO(comment);
     }
 
