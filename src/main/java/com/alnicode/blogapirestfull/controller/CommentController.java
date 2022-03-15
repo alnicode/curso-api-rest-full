@@ -8,6 +8,7 @@ import com.alnicode.blogapirestfull.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,5 +44,12 @@ public class CommentController {
                                                     @PathVariable(value = "commentId") long idComment,
                                                     @RequestBody CommentDTO commentRequest) {
         return new ResponseEntity<>(this.commentService.updateComment(idPost, idComment, commentRequest), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable(value = "postId") long idPost, 
+                                                @PathVariable(value = "commentId") long idComment) {
+        this.commentService.deleteComment(idPost, idComment);
+        return new ResponseEntity<>("Comentario borrado con éxito", HttpStatus.OK);
     }
 }
